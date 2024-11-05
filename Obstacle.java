@@ -108,7 +108,7 @@ public class Obstacle extends Sprite implements Runnable {
 	
 	public void startThread() {
 		//run will be triggered
-		System.out.println("Current moving: " + this.moving);
+		//System.out.println("Current moving: " + this.moving);
 		
 		//if already moving, do not start again
 		if ( !this.moving ) {
@@ -127,7 +127,7 @@ frogLabel.setIcon(new ImageIcon(
 )));*/
 
 			
-			System.out.println("Starting thread");
+			//System.out.println("Starting thread");
 			t = new Thread(this, "Character2 thread");
 			t.start(); //automatic call to the run method
 		}
@@ -145,7 +145,7 @@ frogLabel.setIcon(new ImageIcon(
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		System.out.println("run triggered");
+		//System.out.println("run triggered");
 		
 		while (this.moving) {
 			
@@ -161,25 +161,9 @@ frogLabel.setIcon(new ImageIcon(
 			
 			label.setLocation(this.x, this.y);
 			
-			if(moveFrog && !frog.leftLog()) {
-				// Frog gets off the log if it gets carried to the border
-				if( x >= GameProperties.SCREEN_WIDTH - frog.getWidth()) {
-					frog.getLog().setMoveFrog(false);
-					frog.setLog(null);
-					System.out.println("Touched border. Left Log!");
-				} else
-					frog.setX(x);
-				
-				//move label
-				frogLabel.setLocation(
-						frog.getX(), frog.getY() );
-			}
 			
-			//detect collisions between frog r and char2
-			//if (this.visible) this.detectCollision();
 			this.detectCollision();
 			
-			//System.out.println("x, y: " + this.x + " " + this.y);
 			
 			try {
 				Thread.sleep(200);
@@ -214,6 +198,20 @@ frogLabel.setIcon(new ImageIcon(
 				game.handleCarCollision(this);
 			} else {
 				// logs
+
+				if(moveFrog && !frog.leftLog()) {
+					// Frog gets off the log if it gets carried to the border
+					if( x >= GameProperties.SCREEN_WIDTH - frog.getWidth()) {
+						frog.getLog().setMoveFrog(false);
+						frog.setLog(null);
+						System.out.println("Touched border. Left Log!");
+					} else
+						frog.setX(x);
+					
+					//move label
+					frogLabel.setLocation(
+							frog.getX(), frog.getY() );
+				}
 				game.handleLogLanding(this);
 				
 			}
