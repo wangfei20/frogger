@@ -27,14 +27,19 @@ public class Character extends Sprite {
 
 	public Character() {
 		super();
+		init();
 		// TODO Auto-generated constructor stub
 	}
 
 	public Character(int x, int y, int height, int width, String image) {
 		super(x, y, height, width, image);
+		init();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void init() {
 		this.landed = false;
 		this.leftLog = false;
-		// TODO Auto-generated constructor stub
 	}
 
 }

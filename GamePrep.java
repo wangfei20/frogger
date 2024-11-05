@@ -106,18 +106,18 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		};
 		
 		logs = new Obstacle[] {
-				new Obstacle(0, 130, 40, 70, 30, "log.png", "colcar.png"),
-				new Obstacle(80, 130, 40, 70, 30, "log.png", "colcar.png"),
-				new Obstacle(160, 130, 40, 70, 30, "log.png", "colcar.png"),
-				new Obstacle(400, 130, 40, 70, 30, "log.png", "colcar.png"),
-				new Obstacle(0, 200, 40, 70,20, "log.png", "colcar.png"),
-				new Obstacle(80, 200, 40, 70, 20, "log.png", "colcar.png"),
-				new Obstacle(160, 200, 40, 70, 20, "log.png", "colcar.png"),
-				new Obstacle(400, 200, 40, 70, 20, "log.png", "colcar.png"),
-				new Obstacle(0, 270, 40, 70, 30, "log.png", "colcar.png"),
-				new Obstacle(80, 270, 40, 70, 20, "log.png", "colcar.png"),
-				new Obstacle(160, 270, 40, 70, 30, "log.png", "colcar.png"),
-				new Obstacle(400, 270, 40, 70, 20, "log.png", "colcar.png"),
+				new Obstacle(0, 130, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(80, 130, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(160, 130, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(400, 130, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(0, 200, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(80, 200, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(160, 200, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(400, 200, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(0, 270, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(80, 270, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(160, 270, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(400, 270, 64,64, 10, "wood.png", "colcar.png"),
 		};
 		
 		//set up screen
@@ -234,14 +234,14 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		car.setGame(this);
 		
 		
-		car.startThread();
+		//car.startThread();
 		
 		add(carLabel);
 		
 	}
 	
 	private void startGame() {
-		
+		frog.init();
 		frog.setX(GameProperties.SCREEN_WIDTH / 2 - GameProperties.FROG_WIDTH);
 		frog.setY(GameProperties.SCREEN_HEIGHT - GameProperties.FROG_HEIGHT - 30);
 		
@@ -251,7 +251,10 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
         nameLabel.setText("Name:"+name);
         scoreLabel.setText("Score:"+score);
         
-        
+        for(int i = 0;i<cars.length;i++) {
+        	cars[i].startThread();
+        	logs[i].startThread();
+        }
 	}
 	
 	public static void main(String[] args) {
@@ -289,14 +292,6 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		myGame.startGame();
 		myGame.setVisible(true);
 	}
-
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -351,17 +346,18 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		}
 		
 		if(y < 50) {
-			if(frog.getLanded()) {
-				gameWon();
-			} else {
-				gameLost();
-			}
+//			if(frog.getLanded()) {
+//				gameWon();
+//			} else {
+//				gameLost();
+//			}
+			gameOver(frog.getLanded());
 		}
 		
 	}
 	
 	public void handleCarCollision(Obstacle car) {
-		gameLost();
+		gameOver(false);
 	}
 	
 	public void handleLogLanding(Obstacle log) {
@@ -372,24 +368,36 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		}
 	}
 	
-	public void gameWon() {
-		JOptionPane.showMessageDialog(null, "You won! Game restarted!");
-		score+=50;
-		updatePlayerData();
-	}
+//	public void gameWon() {
+//		JOptionPane.showMessageDialog(null, "You won! Game restarted!");
+//		score+=50;
+//		gameOver();
+//	}
+//	
+//	public void gameLost() {
+//		JOptionPane.showMessageDialog(null, "You're dead! Game restarted!");
+//		if(score >= 50) {
+//			score -= 50;
+//			gameOver();
+//		}
+//		
+//	}
 	
-	public void gameLost() {
-		JOptionPane.showMessageDialog(null, "You're dead! Game restarted!");
-		if(score >= 50) {
-			score -= 50;
-			updatePlayerData();
-		}
+	private void gameOver(boolean won){
 		
-	}
-	
-	private void updatePlayerData(){
-		
+        for(int i = 0;i<cars.length;i++) {
+        	cars[i].stopThread();
+        	logs[i].stopThread();
+        }
         
+        if(won){
+    		score+=50;
+        } else {
+        	if(score >= 50)
+    			score -= 50;
+        }
+
+    	JOptionPane.showMessageDialog(null, won ? "You won! Game restarted!" : "You lost! Game restarted!");
         
 		String sqlUpdate = "UPDATE PLAYERS SET score = ? WHERE name = ?";
         try (PreparedStatement pstmtUpdate = this.conn.prepareStatement(sqlUpdate)) {
@@ -404,7 +412,7 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		}
         
 
-        startGame() ;
+        startGame();
 	}
 	
 
@@ -440,6 +448,12 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 			}
 		
 		}
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
