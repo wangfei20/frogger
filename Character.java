@@ -17,6 +17,10 @@ public class Character extends Sprite {
 		return landed;
 	}
 	
+	public void setLanded(Boolean landed) {
+		this.landed = landed;
+	}
+	
 	public void setLog(Obstacle l) {
 		this.log = l;
 		if(l != null)

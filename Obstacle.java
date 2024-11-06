@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 
 public class Obstacle extends Sprite implements Runnable {
 	
-	private Boolean car, moving, moveRight, detectCollision, moveFrog;
+	private Boolean car, moving, rightToLeft, detectCollision, moveFrog;
 	private int speed;
 	private Thread t;
 	protected String colImage, frogImage, frogColImage;
@@ -96,14 +96,14 @@ public class Obstacle extends Sprite implements Runnable {
 	}
 
 	public Obstacle(int x, int y, int height, int width, int speed,
-			String image, String colImage) {
+			String image, Boolean rightToLeft) {
 		super(x, y, height, width, image);
 		// TODO Auto-generated constructor stub
 		this.moving = false;
 		this.car = false;
 		this.speed = speed;
 		this.moveFrog = false;
-		this.colImage = colImage;
+		this.rightToLeft = rightToLeft;
 	}
 	
 	public void startThread() {
@@ -114,18 +114,6 @@ public class Obstacle extends Sprite implements Runnable {
 		if ( !this.moving ) {
 			this.moving = true;
 			
-			//startButton.setText("Stop");
-			
-			/*this.setImage("tardis.png");
-label.setIcon(new ImageIcon(
-		getClass().getResource("images/" + this.getImage()
-)));
-
-			frog.setImage("dw12.png");
-frogLabel.setIcon(new ImageIcon(
-		getClass().getResource("images/" + frog.getImage()
-)));*/
-
 			
 			//System.out.println("Starting thread");
 			t = new Thread(this, "Character2 thread");
@@ -151,11 +139,19 @@ frogLabel.setIcon(new ImageIcon(
 			
 			int x = this.x;
 			
-			x += this.speed;
-			
-			if ( x >= GameProperties.SCREEN_WIDTH) {
-				x = -1 * this.width;
+			if(rightToLeft) {
+				x -= this.speed;
+				if(x+ this.width <= 0)
+					x = GameProperties.SCREEN_WIDTH;
+				
+			} else {
+				x += this.speed;
+				
+				if ( x >= GameProperties.SCREEN_WIDTH) {
+					x = -1 * this.width;
+				}
 			}
+			
 			
 			this.setX(x); //this.x = x; //rectangle doesn't update
 			
@@ -166,7 +162,7 @@ frogLabel.setIcon(new ImageIcon(
 			
 			
 			try {
-				Thread.sleep(200);
+				Thread.sleep(100);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -198,21 +194,20 @@ frogLabel.setIcon(new ImageIcon(
 				game.handleCarCollision(this);
 			} else {
 				// logs
-
-				if(moveFrog && !frog.leftLog()) {
-					// Frog gets off the log if it gets carried to the border
-					if( x >= GameProperties.SCREEN_WIDTH - frog.getWidth()) {
-						frog.getLog().setMoveFrog(false);
-						frog.setLog(null);
-						System.out.println("Touched border. Left Log!");
-					} else
+//
+				if(frog.getLog() == this) {
+//					// Frog gets off the log if it gets carried to the border
+					if( x >= GameProperties.SCREEN_WIDTH - frog.getWidth() || x <= 0) {
+						game.handleCarCollision(null);
+					} else {
 						frog.setX(x);
-					
+						frog.setY(y);
+					}
 					//move label
 					frogLabel.setLocation(
 							frog.getX(), frog.getY() );
 				}
-				game.handleLogLanding(this);
+				
 				
 			}
 

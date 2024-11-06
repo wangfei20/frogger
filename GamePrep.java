@@ -78,46 +78,46 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		add(nameLabel);
 		add(scoreLabel);
 		
-		frog = new Character(GameProperties.SCREEN_WIDTH / 2 - GameProperties.FROG_WIDTH, GameProperties.SCREEN_HEIGHT - GameProperties.FROG_HEIGHT - 30, 
+		frog = new Character(GameProperties.SCREEN_WIDTH / 2 - GameProperties.FROG_WIDTH, GameProperties.SCREEN_HEIGHT - GameProperties.FROG_HEIGHT - 60, 
 				GameProperties.FROG_HEIGHT, GameProperties.FROG_WIDTH, GameProperties.FROG_IMAGE);
 		
 		
-		/*Obstacle car1 = new Obstacle(0, 570, 50, 50, 20, "car.png", "colcar.png");
-		Obstacle car2 = new Obstacle(80, 570, 50, 50, 20, "car.png", "colcar.png");
-		Obstacle car3 = new Obstacle(160, 570, 50, 50, 20, "car.png", "colcar.png");
-		Obstacle car4 = new Obstacle(400, 570, 50, 50, 20, "car.png", "colcar.png");*/
+		/*Obstacle car1 = new Obstacle(0, 570, 50, 50, 20, "car.png", false);
+		Obstacle car2 = new Obstacle(80, 570, 50, 50, 20, "car.png", false);
+		Obstacle car3 = new Obstacle(160, 570, 50, 50, 20, "car.png", false);
+		Obstacle car4 = new Obstacle(400, 570, 50, 50, 20, "car.png", false);*/
 		
 		
 		cars = new Obstacle[] {
-				new Obstacle(0, 560, 50, 50, 10, "car.png", "colcar.png"),
-				new Obstacle(80, 560, 50, 50, 10, "car.png", "colcar.png"),
-				new Obstacle(160, 560, 50, 50, 10, "car.png", "colcar.png"),
-				new Obstacle(300, 560, 50, 50, 10, "car.png", "colcar.png"),
+				new Obstacle(0, 560, 50, 50, 5, "car.png", true),
+				new Obstacle(80, 560, 50, 50, 5, "car.png", false),
+				new Obstacle(160, 560, 50, 50, 5, "car.png", false),
+				new Obstacle(300, 560, 50, 50, 5, "car.png", false),
 
-				new Obstacle(0, 500, 50, 50, 10, "car.png", "colcar.png"),
-				new Obstacle(80, 500, 50, 50, 10, "car.png", "colcar.png"),
-				new Obstacle(160, 500, 50, 50, 10, "car.png", "colcar.png"),
-				new Obstacle(300, 500, 50, 50, 10, "car.png", "colcar.png"),
+				new Obstacle(0, 500, 50, 50, 5, "car.png", false),
+				new Obstacle(80, 500, 50, 50, 5, "car.png", false),
+				new Obstacle(160, 500, 50, 50, 5, "car.png", false),
+				new Obstacle(300, 500, 50, 50, 5, "car.png", false),
 
-				new Obstacle(0, 450, 50, 50, 10, "car.png", "colcar.png"),
-				new Obstacle(80, 450, 50, 50, 10, "car.png", "colcar.png"),
-				new Obstacle(160, 450, 50, 50, 10, "car.png", "colcar.png"),
-				new Obstacle(300, 450, 50, 50, 10, "car.png", "colcar.png"),
+				new Obstacle(0, 450, 50, 50, 5, "car.png", false),
+				new Obstacle(80, 450, 50, 50, 5, "car.png", false),
+				new Obstacle(160, 450, 50, 50, 5, "car.png", false),
+				new Obstacle(300, 450, 50, 50, 10, "car.png", false),
 		};
 		
 		logs = new Obstacle[] {
-				new Obstacle(0, 130, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(80, 130, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(160, 130, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(400, 130, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(0, 200, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(80, 200, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(160, 200, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(400, 200, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(0, 270, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(80, 270, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(160, 270, 64,64, 10, "wood.png", "colcar.png"),
-				new Obstacle(400, 270, 64,64, 10, "wood.png", "colcar.png"),
+				new Obstacle(0, 130, 64,64, 10, "wood.png", true),
+				new Obstacle(80, 130, 64,64, 5, "wood.png", true),
+				new Obstacle(160, 130, 64,64, 10, "wood.png", true),
+				new Obstacle(400, 130, 64,64, 5, "wood.png", true),
+				new Obstacle(0, 200, 64,64, 20, "wood.png", false),
+				new Obstacle(80, 200, 64,64, 5, "wood.png", false),
+				new Obstacle(160, 200, 64,64, 10, "wood.png", false),
+				new Obstacle(400, 200, 64,64, 5, "wood.png", false),
+				new Obstacle(0, 270, 64,64, 10, "wood.png", true),
+				new Obstacle(80, 270, 64,64, 5, "wood.png", true),
+				new Obstacle(160, 270, 64,64, 10, "wood.png", true),
+				new Obstacle(400, 270, 64,64, 10, "wood.png", true),
 		};
 		
 		//set up screen
@@ -243,7 +243,7 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 	private void startGame() {
 		frog.init();
 		frog.setX(GameProperties.SCREEN_WIDTH / 2 - GameProperties.FROG_WIDTH);
-		frog.setY(GameProperties.SCREEN_HEIGHT - GameProperties.FROG_HEIGHT - 30);
+		frog.setY(GameProperties.SCREEN_HEIGHT - GameProperties.FROG_HEIGHT - 60);
 		
 		//move label
 		frogLabel.setLocation(
@@ -333,6 +333,8 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		frog.setX(x);
 		frog.setY(y);
 		
+		System.out.println(y);
+		
 		//move label
 		frogLabel.setLocation(
 				frog.getX(), frog.getY() );
@@ -345,13 +347,26 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 			System.out.println("Left Log!");
 		}
 		
-		if(y < 50) {
+		if(y < 90) {
 //			if(frog.getLanded()) {
 //				gameWon();
 //			} else {
 //				gameLost();
 //			}
-			gameOver(frog.getLanded());
+			gameOver(true);
+		} else if(y < 310) {
+			frog.setLanded(false);
+			for(int i = 0; i < logs.length; i++) {
+				if(logs[i].getRectangle().intersects(frog.getRectangle())){
+					frog.setLog(logs[i]);
+					
+					break;
+				}
+			}
+			
+			if(!frog.getLanded()) {
+				gameOver(false);
+			}
 		}
 		
 	}
