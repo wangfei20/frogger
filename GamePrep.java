@@ -49,15 +49,11 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 	private ImageIcon backgroundIcon;
 
 	//Cars
-	//private Obstacle car1,car2,car3,car4;
 	private Obstacle[] row1Cars;
 	private Obstacle[] cars;
 	
 	//Logs
 	private Obstacle[] logs;
-	
-	//private JLabel[] carLables;
-	//private JLabel[] logLables;
 	
 	private JButton startButton;
 	
@@ -80,13 +76,6 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		
 		frog = new Character(GameProperties.SCREEN_WIDTH / 2 - GameProperties.FROG_WIDTH, GameProperties.SCREEN_HEIGHT - GameProperties.FROG_HEIGHT - 60, 
 				GameProperties.FROG_HEIGHT, GameProperties.FROG_WIDTH, GameProperties.FROG_IMAGE);
-		
-		
-		/*Obstacle car1 = new Obstacle(0, 570, 50, 50, 20, "car.png", false);
-		Obstacle car2 = new Obstacle(80, 570, 50, 50, 20, "car.png", false);
-		Obstacle car3 = new Obstacle(160, 570, 50, 50, 20, "car.png", false);
-		Obstacle car4 = new Obstacle(400, 570, 50, 50, 20, "car.png", false);*/
-		
 		
 		cars = new Obstacle[] {
 				new Obstacle(0, 560, 50, 50, 5, "car.png", true),
@@ -183,7 +172,6 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
             ResultSet rs = pstmtSelectLike.executeQuery();
             if(rs.next()) {
             	int id = rs.getInt("id");
-                System.out.println("Id:"+id);
             	name = rs.getString("name");
             	score = rs.getInt("score");
             } else {
@@ -374,29 +362,6 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 	public void handleCarCollision(Obstacle car) {
 		gameOver(false);
 	}
-	
-	public void handleLogLanding(Obstacle log) {
-		if(!frog.getLanded()) {
-			System.out.println("Landed!");
-			frog.setLog(log);
-			log.setMoveFrog(true);
-		}
-	}
-	
-//	public void gameWon() {
-//		JOptionPane.showMessageDialog(null, "You won! Game restarted!");
-//		score+=50;
-//		gameOver();
-//	}
-//	
-//	public void gameLost() {
-//		JOptionPane.showMessageDialog(null, "You're dead! Game restarted!");
-//		if(score >= 50) {
-//			score -= 50;
-//			gameOver();
-//		}
-//		
-//	}
 	
 	private void gameOver(boolean won){
 		

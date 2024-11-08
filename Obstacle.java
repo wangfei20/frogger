@@ -11,8 +11,6 @@ public class Obstacle extends Sprite implements Runnable {
 	private Thread t;
 	protected String colImage, frogImage, frogColImage;
 	
-	//declare the label from the main program
-	//DO NOT INSTANTIATE IT!!!!!!!!!!!!!!!!! (no = new JLabel)
 	private JLabel label;	
 	private GamePrep game;
 	
@@ -107,10 +105,7 @@ public class Obstacle extends Sprite implements Runnable {
 	}
 	
 	public void startThread() {
-		//run will be triggered
-		//System.out.println("Current moving: " + this.moving);
 		
-		//if already moving, do not start again
 		if ( !this.moving ) {
 			this.moving = true;
 			
@@ -169,8 +164,6 @@ public class Obstacle extends Sprite implements Runnable {
 			
 		}
 		
-		System.out.println("Thread Stopped");
-		
 	}
 	
 	private void detectCollision() {
@@ -181,16 +174,7 @@ public class Obstacle extends Sprite implements Runnable {
 				//collision detected
 				System.out.println("BOOM!");
 				this.stopThread();
-				
-				/*this.setImage(this.colImage);
-				label.setIcon(new ImageIcon(
-						getClass().getResource("images/" + this.getImage()
-				)));
-
-				frog.setImage(this.frogColImage);
-				frogLabel.setIcon(new ImageIcon(
-						getClass().getResource("images/" + frog.getImage()
-				)));*/
+			
 				game.handleCarCollision(this);
 			} else {
 				// logs
@@ -213,17 +197,5 @@ public class Obstacle extends Sprite implements Runnable {
 
 		}
 	}
-	
-	/*public void hide() {
-		this.visible = false;
-		label.setVisible(this.visible);
-		visibiltyButton.setText("Show");
-	}
-
-	public void show() {
-		this.visible = true;
-		label.setVisible(this.visible);
-		visibiltyButton.setText("Hide");
-	}*/
 
 }
